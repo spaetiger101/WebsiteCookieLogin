@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Stil für das Login-Formular */
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<form id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Benutzername" required><br>
+    <input type="password" id="password" placeholder="Passwort" required><br>
+    <input type="checkbox" id="rememberMe"> <label for="rememberMe">Login-Daten speichern</label><br>
+    <input type="submit" value="Anmelden">
+</form>
+
+<script>
+    // JavaScript für das Login-Formular
+    document.addEventListener("DOMContentLoaded", function() {
+        // Versuche, gespeicherte Login-Daten zu laden
+        var savedUsername = localStorage.getItem("username");
+        var savedPassword = localStorage.getItem("password");
+        if (savedUsername && savedPassword) {
+            document.getElementById("username").value = savedUsername;
+            document.getElementById("password").value = savedPassword;
+        }
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Verhindert das Standardverhalten des Formulars
+
+        // Benutzername und Passwort aus dem Formular extrahieren
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        // Login-Daten speichern, wenn die entsprechende Checkbox aktiviert ist
+        if (document.getElementById("rememberMe").checked) {
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+        } else {
+            // Gespeicherte Login-Daten entfernen
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+        }
+
+        // Beispielhafte Überprüfung: Benutzer "admin" und Passwort "pass"
+        if (username === "admin" && password === "pass") {
+            alert("Erfolgreich angemeldet!");
+            // Hier könnte eine Weiterleitung auf eine andere Seite erfolgen
+        } else {
+            alert("Falscher Benutzername oder Passwort.");
+        }
+    });
+</script>
+</body>
+</html>
